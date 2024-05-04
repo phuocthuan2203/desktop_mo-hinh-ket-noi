@@ -1,0 +1,63 @@
+﻿
+CREATE DATABASE QLNhanSu_Desktop
+GO
+
+USE QLNhanSu_Desktop
+GO
+
+CREATE TABLE CHUCVU(
+	MaChucVu VARCHAR (10) PRIMARY KEY,
+	TenChucVu NVARCHAR(50) NOT NULL,
+	PhuCapCV FLOAT NOT NULL
+);
+GO
+
+CREATE TABLE DMPHONG(
+	MaPhong VARCHAR (10) PRIMARY KEY,
+	TenPhong NVARCHAR(50) NOT NULL,
+);
+GO
+
+CREATE TABLE DSNV(
+	MaNV INT IDENTITY (1,1)  PRIMARY KEY,
+	HoTen NVARCHAR(50) NOT NULL,
+	NgaySinh DATETIME NOT NULL,
+	GioiTinh BIT NOT NULL,
+	SoDT VARCHAR (50),
+	HeSoLuong FLOAT NOT NULL,
+	MaPhong VARCHAR(10),
+	MaChucVu VARCHAR(10),
+
+	FOREIGN KEY (MaPhong) 
+        REFERENCES DMPHONG (MaPhong) 
+        ON DELETE CASCADE ON UPDATE CASCADE,
+	
+	FOREIGN KEY (MaChucVu) 
+        REFERENCES CHUCVU (MaChucVu) 
+        ON DELETE CASCADE ON UPDATE CASCADE,
+);
+GO
+
+INSERT INTO DMPHONG VALUES
+	('HC',N'Hành chính'),
+	('TV', N'Tài vụ'),
+	('TC',N'Tổ chức'),
+	('KH',N'Kế hoạch');
+
+GO
+
+INSERT INTO CHUCVU VALUES
+	('TP',N'Trưởng phòng', 2000000),
+	('PP', N'Phó phòng', 1000000),
+	('NV',N'Nhân viên', 500000);
+	
+GO
+
+INSERT INTO DSNV (HoTen,NgaySinh,GioiTinh,SoDT,HeSoLuong,MaPhong,MaChucVu) VALUES
+	(N'Trần Thị Nhi',23/05/2003,0,'098444343',2.34, 'HC','NV'),
+	(N'Nguyễn Văn Đồng',2/02/2004,1,'098444343',3.99,'KH','TP'),
+	(N'Phan Hai Nam',23/07/2003,1,'0984432143',4.42,'HC','PP');
+GO
+
+	
+
